@@ -83,8 +83,8 @@ public class MainActivity extends AppCompatActivity {
        // TextView Sc = (TextView) findViewById(R.id.textView3);
         //Integer i = Integer.parseInt(myScore);
        Integer i=20;
-      //
-        shared.edit().putInt("MyScore",i).commit();
+      //example change
+        shared.edit().putInt("MyScore",i).apply();
 
 
 
@@ -96,11 +96,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        
+
+
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        sharedPreferences.edit().putString("example_list","20").commit();
+        sharedPreferences.edit().putString("example_list","20").apply();
     }
 
 
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
        // i+=20;
 
        // myScore=i.toString();
-        Sc.setText(""+myScore);
+        Sc.setText(myScore);
     }
     void FirstStart(){
 
@@ -179,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor e = getPrefs.edit();
 
                     //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart", false).commit();
+                    e.putBoolean("firstStart", false).apply();
                     setup();
 
                     //  Apply changes
