@@ -10,7 +10,7 @@ import android.util.Log;
  */
 public class MyAlarmReceiver extends BroadcastReceiver {
     public static final int REQUEST_CODE = 12345;
-    public static final String ACTION = "com.codepath.example.servicesdemo.alarm";
+    //public static final String ACTION = "com.codepath.example.servicesdemo.alarm";
     String TAG ="MyAlarm REciver";
 
     // Triggered by the Alarm periodically (starts the service to run task)
@@ -19,7 +19,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         Intent i = new Intent(context, Checker.class);
      //   i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         i.putExtra("foo", "bar");
-        Log.i(TAG, "onReceive: popup called");
+        Log.i(TAG, "onReceive: Checking called");
         context.startService(i);
     }
 }

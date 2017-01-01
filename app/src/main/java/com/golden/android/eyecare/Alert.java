@@ -16,15 +16,22 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import static java.util.logging.Logger.global;
+
 /**
  * Created by Machine on 15-08-2016.
  */
 public class Alert extends Activity {
     boolean flag=false;
     String TAG ="Alert";
-    Global global =
-            new Global();
+  Global global;// =
+//            new Global();//;
            // (Global) getApplicationContext();
+//    final   Global global= (Global) getApplication().getApplicationContext();
+    /* TODO: global here is not really global variable second declaration generate error
+
+     */
+
 
     private final BroadcastReceiver killer = new BroadcastReceiver() {
         @Override
@@ -41,18 +48,19 @@ public class Alert extends Activity {
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
+
 
     @Override
     public void onBackPressed() {
 
-        global.setFlag(false);
 
         super.onBackPressed();
-      //  Global global = new Global();
+        global.setFlag(false);
+
+        /* TODO fix illgeal sate exception
+
+         */
+        //  Global global = new Global();
 
         //    this.finish();
     }
@@ -60,10 +68,10 @@ public class Alert extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+       global= (Global) getApplicationContext();
         Log.i("ALert", "onCreate:started ");
         registerReceiver(killer, new IntentFilter("killAlert"));
-        Log.i(TAG, "onCreate: reciver registered");
+        Log.i(TAG, "onCreate: killer reciver registered");
         sendBroadcast(new Intent("killerAlert"));
 
         //    this.finish();
@@ -79,9 +87,9 @@ public class Alert extends Activity {
     @Override
     protected void onStop() {
 
-        global.setFlag(true);
-        Log.i(TAG, "onStop: stoppig activity"+global
-                .getFlag());
+        global.setFlag(false);
+//        Log.i(TAG, "onStop: stoppig activity flag "+global
+//                .getFlag());
         //this.finish();
             onBackPressed();
             super.onStop();

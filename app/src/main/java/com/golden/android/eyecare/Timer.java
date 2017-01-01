@@ -4,17 +4,21 @@ import android.app.AlarmManager;
 import android.app.IntentService;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.widget.Toast;
 
 /**
  * Created by Machine on 15-08-2016.
  */
 public class Timer extends IntentService {
     String TAG = "Timer";
+    //ScreenReceiver screenReceiver =new ScreenReceiver();
+
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
      *
@@ -27,6 +31,8 @@ public class Timer extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
+//        registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
+        android.util.Log.i(TAG, "onCreate: android");
     }
 
     @Override
@@ -45,7 +51,7 @@ public class Timer extends IntentService {
         int i=checkTime();
         final int FIFTEEN_SEC_MILLIS =
               // 30000;
-        i*1000;
+        i*10000;
         Log.i(TAG, "onHandleIntent: "+i);
 
         // The AlarmManager, like most system services, isn't created by application code, but
@@ -59,6 +65,13 @@ public class Timer extends IntentService {
 
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+//        unregisterReceiver(screenReceiver);
+        Toast.makeText(getApplicationContext(), "unregistered Receiver", Toast.LENGTH_SHORT).show();
+
+    }
 
     int checkTime(){
 

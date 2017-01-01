@@ -33,11 +33,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         FirstStart();
-       Intent intent= new Intent(getApplicationContext(),Timer.class);
-        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-       startService(intent);
 
-        registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
+//       Intent intent= new Intent(getApplicationContext(),Timer.class);
+//        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//       startService(intent);
+
+       // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
         android.util.Log.i(TAG, "onCreate: android");
         updateScore();
         //scheduleAlarm();
@@ -50,8 +51,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         //if(false)
-        Toast.makeText(MainActivity.this, "unregistering Receiver", Toast.LENGTH_SHORT).show();
-            unregisterReceiver(screenReceiver);
+//       Toast.makeText(MainActivity.this, "unregistering Receiver", Toast.LENGTH_SHORT).show();
+//            unregisterReceiver(screenReceiver);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -146,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
        // i+=20;
 
        // myScore=i.toString();
-        Sc.setText(myScore);
+        Sc.setText(""+myScore); //do not remove "" please -Pratik
     }
     void FirstStart(){
 
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
                     SharedPreferences.Editor e = getPrefs.edit();
 
                     //  Edit preference to make it false because we don't want this to run again
-                    e.putBoolean("firstStart", false).apply();
+                    e.putBoolean("firstStart", false).commit();
                     setup();
 
                     //  Apply changes

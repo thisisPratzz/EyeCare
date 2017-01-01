@@ -48,6 +48,7 @@ public class Checker extends IntentService {
 
             Intent dialogIntent = new Intent(this, Alert.class);
             dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
             startActivity(dialogIntent);
 
 
@@ -61,7 +62,7 @@ public class Checker extends IntentService {
             flag=false;
 
             //this.onBackPressed();
-            Intent dialogIntent = new Intent(this, Timer.class);
+            Intent dialogIntent = new Intent(getApplicationContext(), Timer.class);
             //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startService(dialogIntent);
 
