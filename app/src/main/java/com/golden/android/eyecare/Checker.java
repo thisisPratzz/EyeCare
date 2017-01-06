@@ -2,6 +2,8 @@ package com.golden.android.eyecare;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -30,48 +32,50 @@ public class Checker extends IntentService {
     protected void onHandleIntent(Intent intent) {
         // protected void onHandleIntent(Intent intent) {
         i("Checker", "onHandleIntent: launched ");
-       final   Global global= (Global) getApplicationContext();
+        final Global global = (Global) getApplicationContext();
         //Global global = null; 
-                //= new Global();
-        Boolean flag=global.getFlag();
+        //= new Global();
+        Boolean flag = global.getFlag();
         i(TAG, "onHandleIntent: flag value" + flag);
-      // flag=true;
-        if (!global.getFlag()) { // to display flag must  be false
-            i(TAG, "displayAlert: false so  show");
+        // flag=true;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean Toggle = sharedPreferences.getBoolean("example_switch", true);
+
+        if (Toggle) {
+
+            if (!global.getFlag()) { // to display flag must  be false
+                i(TAG, "displayAlert: false so  show");
 
 
-         //   Toast.makeText(Checker.this, "you will  20 point added to score ", Toast.LENGTH_SHORT).show();
+                //   Toast.makeText(Checker.this, "you will  20 point added to score ", Toast.LENGTH_SHORT).show();
 
-            flag=true;
-            global.setFlag(true);
-            i(TAG, "onHandleIntent: flag value" + flag);
+                flag = true;
+                global.setFlag(true);
+                i(TAG, "onHandleIntent: flag value" + flag);
 
-            Intent dialogIntent = new Intent(this, Alert.class);
-            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Intent dialogIntent = new Intent(this, Alert.class);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            startActivity(dialogIntent);
+                startActivity(dialogIntent);
+
+
+            } else {
+                i(TAG, "displayAlert: display true so kill activity");
+                //   Toast.makeText(Checker.this, "Awesome you have 20 point added to score ", Toast.LENGTH_SHORT).show();
+                sendBroadcast(new Intent("killerAlert"));
+                global.setFlag(false);
+                flag = false;
+
+                //this.onBackPressed();
+//            Intent dialogIntent = new Intent(getApplicationContext(), Timer.class);
+//            //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            startService(dialogIntent);
+
+
+            }
 
 
         }
-        else
-        {
-            i(TAG, "displayAlert: display true so kill activity");
-         //   Toast.makeText(Checker.this, "Awesome you have 20 point added to score ", Toast.LENGTH_SHORT).show();
-            sendBroadcast(new Intent("killerAlert"));
-            global.setFlag(false);
-            flag=false;
-
-            //this.onBackPressed();
-            Intent dialogIntent = new Intent(getApplicationContext(), Timer.class);
-            //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startService(dialogIntent);
-
-
-        }
-
-
-
     }
-
 
 }

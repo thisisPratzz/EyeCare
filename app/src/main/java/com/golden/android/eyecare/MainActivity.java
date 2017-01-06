@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,7 +27,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostResume() {
         updateScore();
+
+
+
         super.onPostResume();
+    }
+
+
+    @Override
+    protected void onResume() {
+
+        final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        final Boolean Toggle = sharedPreferences.getBoolean("example_switch",true);
+        if(Toggle)
+        {
+            Intent Timer = new Intent(getApplicationContext(), Timer.class);
+
+            startService(Timer);
+        }
+
+
+
+
+        final Button turnOnButton = (Button) findViewById(R.id.turnon);
+        turnOnButton.setOnClickListener(new Button.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+                sharedPreferences.edit().putBoolean("example_switch",true).apply();
+                Toast.makeText(MainActivity.this, "Turned On", Toast.LENGTH_SHORT).show();
+                turnOnButton.setVisibility(View.GONE);
+
+            }
+        });
+
+        if (!Toggle)
+        {
+            turnOnButton.setVisibility(View.VISIBLE); //SHOW the button
+
+        }
+
+
+
+        super.onResume();
     }
 
     @Override
@@ -34,15 +78,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         FirstStart();
 
-//       Intent intent= new Intent(getApplicationContext(),Timer.class);
-//        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//       startService(intent);
+
+
 
        // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
         android.util.Log.i(TAG, "onCreate: android");
-        updateScore();
+        //updateScore();
         //scheduleAlarm();
      //   callAlarmFragment();
+
+
+
+
+
+
+
 
     }
 

@@ -21,6 +21,11 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         i.putExtra("foo", "bar");
         Log.i(TAG, "onReceive: Checking called");
         context.startService(i);
+
+//        Intent Timer = new Intent(context, Timer.class);
+//       // Timer.addFlags(Intent.)
+//        context.startService(Timer);
+
     }
 }
 

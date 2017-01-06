@@ -16,22 +16,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
-import static java.util.logging.Logger.global;
-
 /**
  * Created by Machine on 15-08-2016.
  */
 public class Alert extends Activity {
     boolean flag=false;
+    Context context;
     String TAG ="Alert";
-  Global global;// =
-//            new Global();//;
-           // (Global) getApplicationContext();
-//    final   Global global= (Global) getApplication().getApplicationContext();
-    /* TODO: global here is not really global variable second declaration generate error
+    Global global ;//=
+            //new Global();
 
-     */
 
+    // (Global) getApplicationContext();
 
     private final BroadcastReceiver killer = new BroadcastReceiver() {
         @Override
@@ -48,30 +44,21 @@ public class Alert extends Activity {
         }
     };
 
-
-
     @Override
-    public void onBackPressed() {
-
-
-        super.onBackPressed();
-        global.setFlag(false);
-
-        /* TODO fix illgeal sate exception
-
-         */
-        //  Global global = new Global();
-
-        //    this.finish();
+    protected void onResume() {
+        super.onResume();
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       global= (Global) getApplicationContext();
+        context =getApplicationContext();
+        global=(Global) getApplicationContext();
         Log.i("ALert", "onCreate:started ");
         registerReceiver(killer, new IntentFilter("killAlert"));
-        Log.i(TAG, "onCreate: killer reciver registered");
+        Log.i(TAG, "onCreate: reciver registered");
         sendBroadcast(new Intent("killerAlert"));
 
         //    this.finish();
@@ -81,21 +68,44 @@ public class Alert extends Activity {
        // Looper.loop();
 
     }
-
+//    @Override
+//    public void onBackPressed() {
+//
+//        global.setFlag(false);
+//
+//        super.onBackPressed();
+//        //  Global global = new Global();
+//
+//        //    this.finish();
+//    }
+//
+//
+//    @Override
+//    protected void onStop() {
+//
+//        global.setFlag(true);
+//        Log.i(TAG, "onStop: stoppig activity"+global
+//                .getFlag());
+//        //this.finish();
+//            onBackPressed();
+//            super.onStop();
+//
+//
+//
+//    }
 
 
     @Override
     protected void onStop() {
-
         global.setFlag(false);
-//        Log.i(TAG, "onStop: stoppig activity flag "+global
-//                .getFlag());
-        //this.finish();
-            onBackPressed();
-            super.onStop();
+        Log.i(TAG, "onStop: flag value "+global.getFlag());
+            Intent Timer = new Intent(context, Timer.class);
+
+            context.startService(Timer);
 
 
-
+        super.onStop();
+        finish();
     }
 
     @Override
@@ -159,6 +169,8 @@ public class Alert extends Activity {
                 });
         alert.setCancelable(false);
         Log.i(TAG, "displayAlert:  show");
+
+
         alert.show();
 
 

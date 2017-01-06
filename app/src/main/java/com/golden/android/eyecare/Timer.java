@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Looper;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
@@ -49,29 +50,48 @@ public class Timer extends IntentService {
 
         int alarmType = AlarmManager.ELAPSED_REALTIME;
         int i=checkTime();
-        final int FIFTEEN_SEC_MILLIS =
+        final long FIFTEEN_SEC_MILLIS = System.currentTimeMillis()+
               // 30000;
-        i*10000;
+       // i*10000;
+        i*60000;
+        //60*60;
+
         Log.i(TAG, "onHandleIntent: "+i);
 
         // The AlarmManager, like most system services, isn't created by application code, but
         // requested from the system.
         AlarmManager alarmManager = (AlarmManager)
                 getApplicationContext().getSystemService(getApplicationContext().ALARM_SERVICE);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, SystemClock.elapsedRealtime() + FIFTEEN_SEC_MILLIS,
-                FIFTEEN_SEC_MILLIS, pIntent);
-        Looper.loop();
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + FIFTEEN_SEC_MILLIS,
+//                FIFTEEN_SEC_MILLIS, pIntent);
+
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        Boolean Toggle = sharedPreferences.getBoolean("example_switch",true);
+
+        if (Toggle) {
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                alarmManager.setExact(AlarmManager.RTC, FIFTEEN_SEC_MILLIS
+                        , pIntent);
+            } else {
+                alarmManager.set(AlarmManager.ELAPSED_REALTIME, FIFTEEN_SEC_MILLIS
+                        , pIntent);
+
+            }
+        }
+        //Looper.loop();
         Log.i(TAG, "onHandleIntent: running");
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-//        unregisterReceiver(screenReceiver);
-        Toast.makeText(getApplicationContext(), "unregistered Receiver", Toast.LENGTH_SHORT).show();
-
-    }
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+////        unregisterReceiver(screenReceiver);
+//        Toast.makeText(getApplicationContext(), "unregistered Receiver", Toast.LENGTH_SHORT).show();
+//
+//    }
 
     int checkTime(){
 

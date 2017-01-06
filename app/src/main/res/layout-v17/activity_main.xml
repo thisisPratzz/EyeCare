@@ -45,5 +45,13 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_weight="2"
         android:textAlignment="center" />
+    <Button
+        android:text="@string/turn_on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/turnon"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="gone"
+        android:elevation="24dp" />
 
 </LinearLayout>
