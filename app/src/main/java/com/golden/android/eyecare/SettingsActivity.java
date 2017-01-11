@@ -58,6 +58,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                                 ? listPreference.getEntries()[index]
                                 : null);
             }
+
+
 //             else if (preference instanceof RingtonePreference) {
 //                // For ringtone preferences, look up the correct display value
 //                // using RingtoneManager.

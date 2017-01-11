@@ -20,4 +20,8 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
 
+    <style name="theme" parent="android:Theme.Material.Wallpaper.NoTitleBar">
+        <item name="android:statusBarColor">#00000000</item>
+    </style>
+
 </resources>

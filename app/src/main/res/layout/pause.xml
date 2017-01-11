@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/appIntroDefaultPaddingBottomIntro2"
+    android:paddingTop="@dimen/appIntroDefaultPaddingTop"
+    android:paddingLeft="@dimen/appIntroDefaultPaddingLeft"
+    android:paddingRight="@dimen/appIntroDefaultPaddingRight"
+    android:background="@color/scenery"
+    android:fitsSystemWindows="true"
+    >
+
+    <TextView
+        android:text="Take a Break "
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/textView2"
+        android:textSize="@dimen/appIntroHeadingTextSize"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/ic_hand"
+        android:layout_weight="1"
+
+        android:cropToPadding="false"
+        />
+
+    <TextView
+        android:text="@string/to_take_a_break_from_smartphone_click_on_yes"
+
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/textView5"
+        android:textSize="@dimen/textSizeLarge_openSource"
+        android:gravity="center_horizontal"
+        android:layout_weight="2"
+        />
+
+
+</LinearLayout>

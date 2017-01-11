@@ -1,9 +1,14 @@
 package com.golden.android.eyecare;
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.display.DisplayManager;
+import android.os.Build;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
+import android.view.Display;
 import android.widget.Toast;
 
 import java.util.Timer;
@@ -20,6 +25,8 @@ public class Checker extends IntentService {
      *
      * @param //name Used to name the worker thread, important only for debugging.
      */
+
+    // TODO check whether alert is running
     String TAG ="Checker";
     public Checker() {
         super("Checker");
@@ -40,8 +47,9 @@ public class Checker extends IntentService {
         // flag=true;
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean Toggle = sharedPreferences.getBoolean("example_switch", true);
+        Boolean screenon=isScreenOn(getApplicationContext());
 
-        if (Toggle) {
+        if (Toggle&&screenon) {
 
             if (!global.getFlag()) { // to display flag must  be false
                 i(TAG, "displayAlert: false so  show");
@@ -55,6 +63,7 @@ public class Checker extends IntentService {
 
                 Intent dialogIntent = new Intent(this, Alert.class);
                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
 
                 startActivity(dialogIntent);
 
@@ -77,5 +86,29 @@ public class Checker extends IntentService {
 
         }
     }
+
+    /**
+     * Is the screen of the device on.
+     * @param context the context
+     * @return true when (at least one) screen is on
+     */
+    public boolean isScreenOn(Context context) {
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT_WATCH) {
+            DisplayManager dm = (DisplayManager) context.getSystemService(Context.DISPLAY_SERVICE);
+            boolean screenOn = false;
+            for (Display display : dm.getDisplays()) {
+                if (display.getState() != Display.STATE_OFF) {
+                    screenOn = true;
+                }
+            }
+            return screenOn;
+        } else {
+            PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            //noinspection deprecation
+            return pm.isScreenOn();
+        }
+    }
+
+
 
 }

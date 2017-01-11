@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/appIntroDefaultPaddingBottomIntro2"
+    android:paddingTop="@dimen/appIntroDefaultPaddingTop"
+    android:paddingLeft="@dimen/appIntroDefaultPaddingLeft"
+    android:paddingRight="@dimen/appIntroDefaultPaddingRight"
+    android:fitsSystemWindows="true"
+    android:background="@color/scenery"
+    >
+
+    <TextView
+        android:text="@string/after_every_20_minutes_of_screen_use"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/textView2"
+        android:textSize="@dimen/appIntroHeadingTextSize"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:src="@drawable/ic_clock"
+        android:layout_weight="1"
+
+        android:cropToPadding="false"
+        />
+
+    <TextView
+        android:text="@string/eyecare_will_display_to_alert_if_you_have_use_this_device_for_more_20_minutes"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/textView5"
+        android:textSize="@dimen/textSizeLarge_openSource"
+        android:gravity="center_horizontal"
+        android:layout_weight="2"
+        />
+
+
+</LinearLayout>

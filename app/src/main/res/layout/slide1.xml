@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/appIntroDefaultPaddingBottomIntro2"
+    android:paddingLeft="@dimen/appIntroDefaultPaddingLeft"
+    android:paddingRight="@dimen/appIntroDefaultPaddingRight"
+    android:paddingTop="@dimen/appIntroDefaultPaddingTop">
+
+    <TextView
+        style="@style/AppIntroDefaultHeading"
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:text="@string/ExcessiveUse"
+        android:textSize="@dimen/appIntroHeadingTextSize"
+         />
+
+    <android.support.v7.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+            android:src="@drawable/ic_man" />
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            android:layout_weight="1"
+
+            android:src="@drawable/ic_girl" />
+    </android.support.v7.widget.LinearLayoutCompat>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2"
+        android:gravity="center_horizontal"
+        android:text="@string/slide1"
+        android:textSize="@dimen/textSizeLarge_openSource"
+
+        />
+
+</LinearLayout>

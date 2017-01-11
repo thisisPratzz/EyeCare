@@ -52,9 +52,9 @@ public class Timer extends IntentService {
         int i=checkTime();
         final long FIFTEEN_SEC_MILLIS = System.currentTimeMillis()+
               // 30000;
-       // i*10000;
+
         i*60000;
-        //60*60;
+        //  i*1000;
 
         Log.i(TAG, "onHandleIntent: "+i);
 
@@ -75,7 +75,7 @@ public class Timer extends IntentService {
                 alarmManager.setExact(AlarmManager.RTC, FIFTEEN_SEC_MILLIS
                         , pIntent);
             } else {
-                alarmManager.set(AlarmManager.ELAPSED_REALTIME, FIFTEEN_SEC_MILLIS
+                alarmManager.set(AlarmManager.RTC, FIFTEEN_SEC_MILLIS
                         , pIntent);
 
             }

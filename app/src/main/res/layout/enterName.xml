@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/slide_policy_demo_container"
+              style="@style/AppIntroDefaultPadding.Intro1"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#222222"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/AppIntroDefaultHeading"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter Your Name"
+
+
+        />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:text=""
+        android:ems="10"
+        android:id="@+id/edit_name"
+
+        android:textSize="50sp"
+        android:textAlignment="center"
+        android:selectAllOnFocus="false"
+        android:contextClickable="false"
+        android:freezesText="false" />
+
+    <!--<CheckBox-->
+        <!--android:id="@+id/slide_policy_demo_checkbox"-->
+        <!--style="@style/AppIntroDefaultText"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="16dp"-->
+
+        <!--/>-->
+
+</LinearLayout>

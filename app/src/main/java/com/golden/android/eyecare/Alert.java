@@ -96,6 +96,14 @@ public class Alert extends Activity {
 
 
     @Override
+    protected void onPause() {
+        finish();
+
+        super.onPause();
+
+    }
+
+    @Override
     protected void onStop() {
         global.setFlag(false);
         Log.i(TAG, "onStop: flag value "+global.getFlag());
@@ -126,11 +134,12 @@ public class Alert extends Activity {
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         alert.setMessage("You have used Device For 20 mins Now avoid Screens for only 20 seconds");
-        alert.setPositiveButton("Turn screen Off", new DialogInterface.OnClickListener() {
+        alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                // Toast.makeText(Alert.this, "turning off screen", Toast.LENGTH_SHORT).show();
                 Intent dialogIntent = new Intent(getApplicationContext(), Count.class);
                 dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
                 startActivity(dialogIntent);
                 finish();
 //               PowerManager manager = (PowerManager) getSystemService(Context.POWER_SERVICE);
@@ -151,7 +160,7 @@ public class Alert extends Activity {
             }
         });
 
-        alert.setNegativeButton("Wait",
+        alert.setNegativeButton("Abort",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
 

@@ -20,6 +20,9 @@ import android.widget.Toast;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+
+// TODO remove from recents
+
 public class Count extends AppCompatActivity {
     String TAG = "Count Class";
     /**
@@ -194,7 +197,7 @@ public class Count extends AppCompatActivity {
       //  Log.i(TAG, "countDownt: "+s);
 
 
-        int Time=2000;
+        int Time=20000;
         Time+=1000;//so display starts from selected time
         new CountDownTimer(Time, 1000) {
             TextView mTextField=(TextView)findViewById(R.id.fullscreen_content);

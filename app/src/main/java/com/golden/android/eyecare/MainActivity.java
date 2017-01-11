@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,6 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.mikepenz.aboutlibraries.Libs;
+import com.mikepenz.aboutlibraries.LibsBuilder;
+import com.mikepenz.aboutlibraries.entity.Library;
+import com.mikepenz.aboutlibraries.ui.LibsSupportFragment;
+import com.mikepenz.aboutlibraries.ui.item.LibraryItem;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class MainActivity extends AppCompatActivity {
     public static final String FRAGTAG = "RepeatingAlarmFragment";
@@ -76,6 +85,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
+//        Intent intent = new Intent(getApplicationContext(),IntroActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+//        startActivity(intent);
+
         FirstStart();
 
 
@@ -122,12 +139,37 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.item2:
-                Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
+                about();
+
                 return true;
         }
         return super.onOptionsItemSelected(item);
 
     }
+
+    void about()
+    {
+
+        Library library =new Library("gd","aaa","Fdssfgd");
+        LibraryItem libraryItem =new LibraryItem();
+        libraryItem.withLibrary(library);
+        LibsBuilder l=new LibsBuilder();
+
+        //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)
+        l.withActivityStyle(Libs.ActivityStyle.LIGHT_DARK_TOOLBAR);
+        l.withAutoDetect(true);
+        l.withLibraries("aaa");
+        //start the activity
+        l.withAboutAppName(getString(R.string.app_name));
+        l.withAboutIconShown(true);
+        l.withAboutVersionShown(true);
+        l.withAboutDescription("This is a app that helps you to protect your eyes from too much use of smartphones.<br /><b>App is designed by Pratik Khadtale</b>");
+        l.start(this);
+
+
+    }
+
     void setup(){
         SharedPreferences shared = getSharedPreferences("score", Context.MODE_PRIVATE);
        // String myScore = shared.getString("MyScore", null);
@@ -211,13 +253,18 @@ public class MainActivity extends AppCompatActivity {
 
                 //  Create a new boolean and preference and set it to true
                 boolean isFirstStart = getPrefs.getBoolean("firstStart", true);
-
+                String s=getPrefs.getString("example_text",null);
                 //  If the activity has never started before...
-                if (isFirstStart) {
-//                  Toast.makeText(MainActivity.this, "Fist run", Toast.LENGTH_SHORT).show();
+                if (s==null) {
+
+               //  Toast.makeText(MainActivity.this, "Fist run", Toast.LENGTH_SHORT).show();
 
 
+                    Intent intent = new Intent(getApplicationContext(),IntroActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    //intent.addFlags(I)
 
+                    startActivity(intent);
                     //  Launch app intro
                     //Intent i = new Intent(MainActivity.this,DefaultIntro.class);
 //                    //startActivity(i);

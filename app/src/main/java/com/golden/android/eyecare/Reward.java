@@ -24,6 +24,7 @@ public class Reward extends AppCompatActivity {
         TextView name = (TextView) findViewById(R.id.RewadTextView);
         s = name.getText()+" "+ s;
         name.setText(s);
+        // TODO increasing score
     increaseScore();
         Button button = (Button) findViewById(R.id.ContinueButton);
         button.setOnClickListener(new View.OnClickListener() {
