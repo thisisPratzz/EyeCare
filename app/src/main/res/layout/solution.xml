@@ -19,6 +19,7 @@
         android:textSize="@dimen/appIntroHeadingTextSize"
         android:layout_weight="2"
         android:gravity="center_horizontal"
+        style="@style/AppIntroDefaultHeading"
         />
 
     <ImageView
@@ -38,6 +39,7 @@
         android:textSize="@dimen/textSizeLarge_openSource"
         android:gravity="center_horizontal"
         android:layout_weight="2"
+        style=""
         />
 
 

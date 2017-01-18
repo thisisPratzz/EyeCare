@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="define_eyeicon"></string>
+	<!-- Author section -->
+	<string name="library_eyeicon_author">Pixel Buddha</string>
+	<string name="library_eyeicon_authorWebsite">http://www.flaticon.com/authors/pixel-buddha</string>
+	<!-- Library section -->
+	<string name="library_eyeicon_libraryName">Eye Icon</string>
+	<string name="library_eyeicon_libraryDescription">Main Icon used </string>
+	<string name="library_eyeicon_libraryWebsite">http://www.flaticon.com</string>
+	<string name="library_eyeicon_libraryVersion"></string>
+	<!-- OpenSource section -->
+	<string name="library_eyeicon_isOpenSource">false</string>
+	<string name="library_eyeicon_repositoryLink">http://creativecommons.org/licenses/by/3.0/</string>
+	<!-- ClassPath for autoDetect section -->
+	<string name="library_eyeicon_classPath"></string>
+	<!-- License section -->
+	<string name="library_eyeicon_licenseId">cc30</string>
+	<!-- Custom variables section -->
+</resources>

@@ -36,6 +36,9 @@ public class Alert extends Activity {
 
             finish();
 
+            global.setFlag(false);
+
+
 
 
 
@@ -98,6 +101,7 @@ public class Alert extends Activity {
     @Override
     protected void onPause() {
         finish();
+        global.setFlag(false);
 
         super.onPause();
 

@@ -48,7 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         final SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         final Boolean Toggle = sharedPreferences.getBoolean("example_switch",true);
-        if(Toggle)
+        Intent intent2 = new Intent(getApplicationContext(), MyAlarmReceiver.class);
+
+        final PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 1234,
+                intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+        boolean running =(PendingIntent.getBroadcast(getApplicationContext(), 1234,
+                intent2, PendingIntent.FLAG_UPDATE_CURRENT)!=null);
+        if(Toggle&&!running)
         {
             Intent Timer = new Intent(getApplicationContext(), Timer.class);
 
@@ -84,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
 
 
@@ -94,6 +99,8 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
 
         FirstStart();
+        setContentView(R.layout.activity_main);
+        getSupportActionBar().setElevation(0);
 
 
 
@@ -122,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
 //            unregisterReceiver(screenReceiver);
     }
     @Override
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // return super.onCreateOptionsMenu(menu);
         //  loadHeadersFromResource(R.xml.pref_headers, menu);
@@ -140,6 +148,15 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             case R.id.item2:
                 //Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
+
+                Intent guide = new Intent(getApplicationContext(),IntroActivity.class);
+                guide.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                //intent.addFlags(I)
+
+                startActivity(guide);
+                return true;
+            case R.id.item3:
+                //Toast.makeText(getApplicationContext(), "Item 2 Selected", Toast.LENGTH_LONG).show();
                 about();
 
                 return true;
@@ -151,9 +168,7 @@ public class MainActivity extends AppCompatActivity {
     void about()
     {
 
-        Library library =new Library("gd","aaa","Fdssfgd");
-        LibraryItem libraryItem =new LibraryItem();
-        libraryItem.withLibrary(library);
+
         LibsBuilder l=new LibsBuilder();
 
         //provide a style (optional) (LIGHT, DARK, LIGHT_DARK_TOOLBAR)

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="define_AboutLibraries">cedits</string>
-    <string name="library_AboutLibraries_author">Pratik Khadtale</string>
-    <string name="library_AboutLibraries_authorWebsite">http://mikepenz.com/</string>
-    <string name="library_AboutLibraries_libraryName">Pratik Kahdtale</string>
+    <string name="define_AboutLibraries">vector Images</string>
+    <string name="library_AboutLibraries_author">Designed by Freepik</string>
+    <string name="library_AboutLibraries_authorWebsite">http://www.freepik.com</string>
+    <string name="library_AboutLibraries_libraryName">Vector Images </string>
     <string name="library_AboutLibraries_libraryDescription">
         <![CDATA[
         <b>AboutLibraries</b> is a library to offer you all the information you need of your libraries!
@@ -20,4 +20,8 @@
     <!-- Custom variables section -->
     <string name="library_AboutLibraries_owner">Mike Penz</string>
     <string name="library_AboutLibraries_year">2016</string>
+
+
+
+
 </resources>

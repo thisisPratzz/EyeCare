@@ -34,15 +34,25 @@ public class Timer extends IntentService {
         super.onCreate();
 //        registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
         android.util.Log.i(TAG, "onCreate: android");
+
     }
 
     @Override
     protected void onHandleIntent(Intent intent) {
+
+
+//        Intent dialogIntent = new Intent(this, Alert.class);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//
+//        startActivity(dialogIntent);
+
+
         Log.i(TAG, "onHandleIntent: Timer started");
         Intent intent2 = new Intent(getApplicationContext(), MyAlarmReceiver.class);
 
         // Create a PendingIntent to be triggered when the alarm goes off
-        final PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), MyAlarmReceiver.REQUEST_CODE,
+        final PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 1234,
                 intent2, PendingIntent.FLAG_UPDATE_CURRENT);
 
 

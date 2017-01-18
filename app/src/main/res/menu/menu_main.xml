@@ -3,6 +3,8 @@
     <item  android:id="@+id/item1"
         android:title="Settings"/>
     <item  android:id="@+id/item2"
-        android:title="About"/>
+        android:title="Guide"/>
+    <item  android:id="@+id/item3"
+    android:title="About"/>
 
 </menu>

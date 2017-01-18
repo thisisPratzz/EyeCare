@@ -62,7 +62,27 @@ public class EnterName extends Fragment implements ISlidePolicy, ISlideBackgroun
         View view = inflater.inflate(R.layout.entername, container, false);
         layoutContainer = (LinearLayout) view.findViewById(R.id.slide_policy_demo_container);
 //        checkBox = (CheckBox) view.findViewById(R.id.slide_policy_demo_checkbox);
+
         editText = (EditText) view.findViewById(R.id.edit_name);
+
+
+
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            String s= sharedPreferences.getString("example_text",null);
+        if(s!=null)
+        {
+            editText.setText(s);
+        }
+
+
+
+
+
+
+
+
+
+
 
         editText.addTextChangedListener(new TextWatcher() {
             @Override
