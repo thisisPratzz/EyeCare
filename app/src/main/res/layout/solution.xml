@@ -28,8 +28,11 @@
         android:src="@drawable/ic_clock"
         android:layout_weight="1"
 
-        android:cropToPadding="false"
-        />
+        android:cropToPadding="true"
+        android:adjustViewBounds="false"
+        android:scaleType="centerInside"
+        android:layout_margin="30dp"
+        android:elevation="18dp" />
 
     <TextView
         android:text="@string/eyecare_will_display_to_alert_if_you_have_use_this_device_for_more_20_minutes"

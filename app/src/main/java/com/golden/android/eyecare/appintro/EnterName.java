@@ -75,32 +75,7 @@ public class EnterName extends Fragment implements ISlidePolicy, ISlideBackgroun
         }
 
 
-
-
-
-
-
-
-
-
-
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                   // onResume();
-            }
-        });
+        
 
         return view;
     }
