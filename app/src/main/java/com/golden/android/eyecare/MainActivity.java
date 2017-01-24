@@ -277,6 +277,9 @@ public class MainActivity extends AppCompatActivity {
 
                //  Toast.makeText(MainActivity.this, "Fist run", Toast.LENGTH_SHORT).show();
 
+                    Intent Timer = new Intent(getApplicationContext(), Timer.class);
+
+                    startService(Timer);
 
                     Intent intent = new Intent(getApplicationContext(),IntroActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

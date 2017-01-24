@@ -1,16 +1,14 @@
 package com.golden.android.eyecare;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -25,25 +23,37 @@ import android.widget.Toast;
 
 
 public class Count extends AppCompatActivity {
-    String TAG = "Count Class";
     /**
      * Whether or not the system UI should be auto-hidden after
      * {@link #AUTO_HIDE_DELAY_MILLIS} milliseconds.
      */
     private static final boolean AUTO_HIDE = true;
-
     /**
      * If {@link #AUTO_HIDE} is set, the number of milliseconds to wait after
      * user interaction before hiding the system UI.
      */
     private static final int AUTO_HIDE_DELAY_MILLIS = 3000;
-
     /**
      * Some older devices needs a small delay between UI widget updates
      * and a change of the status and navigation bar.
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler mHideHandler = new Handler();
+    /**
+     * Touch listener to use for in-layout UI controls to delay hiding the
+     * system UI. This is to prevent the jarring behavior of controls going away
+     * while interacting with activity UI.
+     */
+    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            if (AUTO_HIDE) {
+                delayedHide(AUTO_HIDE_DELAY_MILLIS);
+            }
+            return false;
+        }
+    };
+    String TAG = "Count Class";
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -81,20 +91,6 @@ public class Count extends AppCompatActivity {
             hide();
         }
     };
-    /**
-     * Touch listener to use for in-layout UI controls to delay hiding the
-     * system UI. This is to prevent the jarring behavior of controls going away
-     * while interacting with activity UI.
-     */
-    private final View.OnTouchListener mDelayHideTouchListener = new View.OnTouchListener() {
-        @Override
-        public boolean onTouch(View view, MotionEvent motionEvent) {
-            if (AUTO_HIDE) {
-                delayedHide(AUTO_HIDE_DELAY_MILLIS);
-            }
-            return false;
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,9 +99,9 @@ public class Count extends AppCompatActivity {
         setContentView(R.layout.activity_count);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // Integer timer = sharedPreferences.getInt(getString(R.array.pref_sync_frequency_values),20);
-        String s = sharedPreferences.getString("example_text",null);
-        TextView name =(TextView)findViewById(R.id.Suggestion);
-        s=s+" "+name.getText();
+        String s = sharedPreferences.getString("example_text", null);
+        TextView name = (TextView) findViewById(R.id.Suggestion);
+        s = s + " " + name.getText();
         name.setText(s);
 
         mVisible = true;
@@ -127,6 +123,7 @@ public class Count extends AppCompatActivity {
         //findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
         countDown();
     }
+
     // Disable back press
     @Override
     public void onBackPressed() {
@@ -187,27 +184,28 @@ public class Count extends AppCompatActivity {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
     }
-    void countDown()
-    {
+
+    void countDown() {
 
 //        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // Integer timer = sharedPreferences.getInt(getString(R.array.pref_sync_frequency_values),20);
- //       String s = sharedPreferences.getString("example_text",null);
+        //       String s = sharedPreferences.getString("example_text",null);
 
 
-      //  Log.i(TAG, "countDownt: "+s);
+        //  Log.i(TAG, "countDownt: "+s);
 
 
-        int Time=20000;
-        Time+=1000;//so display starts from selected time
+        int Time = 20000;
+        Time += 1000;//so display starts from selected time
         new CountDownTimer(Time, 1000) {
-            TextView mTextField=(TextView)findViewById(R.id.fullscreen_content);
+            TextView mTextField = (TextView) findViewById(R.id.fullscreen_content);
+
             public void onTick(long millisUntilFinished) {
                 mTextField.setText("" + millisUntilFinished / 1000);
             }
 
             public void onFinish() {
-             //   mTextField.setText("done!");
+                //   mTextField.setText("done!");
 
                 callReward();
                 finish();
@@ -216,8 +214,8 @@ public class Count extends AppCompatActivity {
 
     }
 
-    void callReward(){
-        Intent intent= new Intent(getApplicationContext(),Reward.class);
+    void callReward() {
+        Intent intent = new Intent(getApplicationContext(), Reward.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
