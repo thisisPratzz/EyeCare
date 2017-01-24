@@ -14,7 +14,6 @@
         android:textColor="#dfe0e2"
         android:textSize="60sp"
         android:layout_gravity="center_horizontal"
-        style="@style/AppIntroDefaultHeading"
         android:paddingTop="16sp"
         android:longClickable="false"
         android:linksClickable="false"
@@ -64,7 +63,8 @@
         android:layout_weight="1"
         android:background="#FF5722"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored" />
 
 
 </LinearLayout>

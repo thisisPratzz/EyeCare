@@ -50,11 +50,14 @@ public class MainActivity extends AppCompatActivity {
         final Boolean Toggle = sharedPreferences.getBoolean("example_switch",true);
         Intent intent2 = new Intent(getApplicationContext(), MyAlarmReceiver.class);
 
-        final PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 1234,
-                intent2, PendingIntent.FLAG_UPDATE_CURRENT);
-        boolean running =(PendingIntent.getBroadcast(getApplicationContext(), 1234,
-                intent2, PendingIntent.FLAG_UPDATE_CURRENT)!=null);
-        if(Toggle&&!running)
+//        final PendingIntent pIntent = PendingIntent.getBroadcast(getApplicationContext(), 1234,
+//                intent2, PendingIntent.FLAG_UPDATE_CURRENT);
+//        boolean running =(PendingIntent.getBroadcast(getApplicationContext(), 1234,
+//                intent2, PendingIntent.FLAG_UPDATE_CURRENT)!=null);
+
+        boolean isWorking = (PendingIntent.getBroadcast(getApplicationContext(), 1234, intent2, PendingIntent.FLAG_NO_CREATE) != null);
+
+        if(Toggle&&!isWorking)
         {
             Intent Timer = new Intent(getApplicationContext(), Timer.class);
 

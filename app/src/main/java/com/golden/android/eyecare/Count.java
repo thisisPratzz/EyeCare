@@ -21,7 +21,8 @@ import android.widget.Toast;
  * status bar and navigation/system bar) with user interaction.
  */
 
-// TODO remove from recents
+// TODO add sound
+
 
 public class Count extends AppCompatActivity {
     String TAG = "Count Class";
