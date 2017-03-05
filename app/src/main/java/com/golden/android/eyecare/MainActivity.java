@@ -96,16 +96,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-//        Intent intent = new Intent(getApplicationContext(),IntroActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//
-//        startActivity(intent);
+
 
         FirstStart();
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
 
-
+        Intent intent = new Intent(getApplicationContext(),Bubble.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//
+        startActivity(intent);
 
 
        // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));

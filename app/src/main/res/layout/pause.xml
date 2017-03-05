@@ -30,7 +30,8 @@
         android:layout_weight="1"
 
         android:cropToPadding="false"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:id="@+id/imageView" />
 
     <TextView
         android:text="@string/to_take_a_break_from_smartphone_click_on_yes"

@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,11 +27,11 @@ public class Alert extends Activity {
     Context context;
     String TAG ="Alert";
     Global global ;//=
+
             //new Global();
 
-
     // (Global) getApplicationContext();
-
+    int time;
     private final BroadcastReceiver killer = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -57,6 +60,11 @@ public class Alert extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+
+
+        
         context =getApplicationContext();
         global=(Global) getApplicationContext();
         Log.i("ALert", "onCreate:started ");
@@ -128,16 +136,25 @@ public class Alert extends Activity {
 
     void displayAlert()
     {
-
+        time=checkTime();
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
 
-        alert.setTitle("Time to Protect you Eyes froms Screens");
+        alert.setTitle("Time to protect your eye's from Screen");
         // alert.setMessage(th"Message");
      //   alert.setCancelable(false);
         this.setFinishOnTouchOutside(false);
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        alert.setMessage("You have used Device For 20 mins Now avoid Screens for only 20 seconds");
+        alert.setMessage("You have used mobile phone for "+time+" min's. Now to avoid Screens for only 20 seconds Click 'Yes'");
+        alert.setIcon(R.drawable.ic_eye);
+        //String a=getString(R.array.pref_sync_frequency_values);
+//alert.setSingleChoiceItems(R.array.pref_sync_frequency_values, 4, new DialogInterface.OnClickListener() {
+//    @Override
+//    public void onClick(DialogInterface dialogInterface, int i) {
+//
+//    }
+//});
+
         alert.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                // Toast.makeText(Alert.this, "turning off screen", Toast.LENGTH_SHORT).show();
@@ -185,6 +202,18 @@ public class Alert extends Activity {
 
 
         alert.show();
+
+
+    }
+
+    int checkTime(){
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String s = sharedPreferences.getString("example_list","20");
+        //getString("example_list","20");
+
+        Integer i= Integer.parseInt(s);
+        return  i;
 
 
     }
