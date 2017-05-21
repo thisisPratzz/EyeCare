@@ -48,7 +48,7 @@ public class Checker extends IntentService {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean Toggle = sharedPreferences.getBoolean("example_switch", true);
         Boolean screenon=isScreenOn(getApplicationContext());
-
+        screenon =true;
         if (Toggle&&screenon) {
 
             if (!global.getFlag()) { // to display flag must  be false
@@ -61,11 +61,16 @@ public class Checker extends IntentService {
                 global.setFlag(true);
                 i(TAG, "onHandleIntent: flag value" + flag);
 
-                Intent dialogIntent = new Intent(this, Alert.class);
-                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//                Intent dialogIntent = new Intent(this, Alert.class);
+//                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+//
+//                startActivity(dialogIntent);
 
-                startActivity(dialogIntent);
+            Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+            //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startService(dialogIntent);
+
 
 
             } else {

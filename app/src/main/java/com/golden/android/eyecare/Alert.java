@@ -64,10 +64,16 @@ public class Alert extends Activity {
         Log.i(TAG, "onCreate: reciver registered");
         sendBroadcast(new Intent("killerAlert"));
 
+
+
+        Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+        //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(dialogIntent);
+
         //    this.finish();
 //       Checker check = new Checker();
 
-        displayAlert();
+       // displayAlert();
        // Looper.loop();
 
     }
@@ -188,5 +194,9 @@ public class Alert extends Activity {
 
 
     }
+
+
+
+
 
 }

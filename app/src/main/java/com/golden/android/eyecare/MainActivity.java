@@ -1,15 +1,20 @@
 package com.golden.android.eyecare;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
+import android.provider.Settings;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +34,14 @@ import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
 
 public class MainActivity extends AppCompatActivity {
     public static final String FRAGTAG = "RepeatingAlarmFragment";
+
+
+
+
+    /**
+     *Permission permission code of flow to display customized FloatingView
+     */
+    private static final int CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE = 101;
 
     String TAG ="MainActivity";
     ScreenReceiver screenReceiver =new ScreenReceiver();
@@ -106,6 +119,14 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setElevation(0);
 
 
+        boolean permissionCheck = Settings.canDrawOverlays(getApplicationContext());
+        if(!permissionCheck) {
+            final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getApplicationContext().getPackageName()));
+            startActivityForResult(intent, CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE);
+        }
+        Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+        //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startService(dialogIntent);
 
 
        // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));

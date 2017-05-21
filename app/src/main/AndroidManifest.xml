@@ -41,7 +41,9 @@
                 <action android:name="killAlert" />
             </intent-filter>
         </activity>
-
+        <service
+            android:name=".CustomFloatingViewService"
+            android:exported="false" />
         <service
             android:name=".Checker"
             android:exported="false" />
@@ -72,7 +74,6 @@
         <activity
             android:name=".Reward"
             android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".Head"></activity>
     </application>
 
 </manifest>

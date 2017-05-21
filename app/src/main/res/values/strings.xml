@@ -73,4 +73,15 @@
     <string name="eyecare_will_display_to_alert_if_you_have_use_this_device_for_more_20_minutes">EyeCare will Display to alert if you have use this device for more 20 minutes</string>
     <string name="to_take_a_break_from_smartphone_click_on_yes">To take a Break From smartphone click on yes</string>
     <string name="look_at_far_object_which_20_feets_away">Look at far object which 20 feets Away</string>
+
+
+
+
+
+    <string name="notification_content_text">is running in background</string>
+    <string name="Toasttext1">You have used device for</string>
+    <string name="Toasttext2">minutes now , time for break click on eye Icon</string>
+
+
+
 </resources>
