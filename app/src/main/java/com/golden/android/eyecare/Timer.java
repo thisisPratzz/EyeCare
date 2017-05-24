@@ -63,8 +63,8 @@ public class Timer extends IntentService {
         final long FIFTEEN_SEC_MILLIS = System.currentTimeMillis()+
               // 30000;
 
-        //i*60000;  //minutes
-          i*1000;  //20 seconds
+        i*60000;  //minutes
+         // i*1000;  //20 seconds
 
         Log.i(TAG, "onHandleIntent: "+i);
 

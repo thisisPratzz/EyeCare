@@ -3,21 +3,30 @@ package com.golden.android.eyecare;
 import android.app.Notification;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.hardware.display.DisplayManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import jp.co.recruit_lifestyle.android.floatingview.FloatingViewListener;
@@ -28,6 +37,12 @@ import jp.co.recruit_lifestyle.android.floatingview.FloatingViewManager;
  * サンプルとしてクリック時にはメールアプリを起動します。
  */
 public class CustomFloatingViewService extends Service implements FloatingViewListener {
+
+
+    Context context;
+    String TAG = "FloatingView";
+    Global global;
+
 
     /**
      * 通知ID
@@ -49,9 +64,43 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
      */
     private FloatingViewManager mFloatingViewManager;
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+
+        context = getApplicationContext();
+        global = (Global) getApplicationContext();
+
+
+
+        final IntentFilter filter = new IntentFilter(Intent.ACTION_SCREEN_ON);
+        filter.addAction(Intent.ACTION_SCREEN_OFF);
+        final BroadcastReceiver screenoffReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
+                    Log.v("screenoffReceiver", "SCREEN OFF");
+                    onDestroy();
+                }
+                return;
+            }
+        };
+        registerReceiver(screenoffReceiver, filter);
+
+
+
+
+
+
+
+    }
+
     /**
      * {@inheritDoc}
      */
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // 既にManagerが存在していたら何もしない
@@ -81,19 +130,19 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
                 stopSelf();
 
 
-
-
             }
         });
 
-        String ToastString = getString(R.string.Toasttext1)+" "+checkTime()+" "+getString(R.string.Toasttext2);
+        String ToastString = getString(R.string.Toasttext1) + " " + checkTime() + " " + getString(R.string.Toasttext2);
         Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_SHORT);
 //      Set the Gravity to Top and Left
         toast.setGravity(Gravity.TOP | Gravity.LEFT, 100, 200);
         toast.setDuration(Toast.LENGTH_LONG);
+
+        ViewGroup group = (ViewGroup) toast.getView();
+        TextView messageTextView = (TextView) group.getChildAt(0);
+        messageTextView.setTextSize(20);
         toast.show();
-
-
 
 
         mFloatingViewManager = new FloatingViewManager(this, this);
@@ -117,6 +166,8 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
     @Override
     public void onDestroy() {
         destroy();
+
+
         super.onDestroy();
     }
 
@@ -134,6 +185,8 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
      */
     @Override
     public void onFinishFloatingView() {
+
+
         stopSelf();
     }
 
@@ -155,10 +208,17 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
      * Viewを破棄します。
      */
     private void destroy() {
+        global.setFlag(false);
+        Log.i(TAG, "onStop: flag value " + global.getFlag());
+        Intent Timer = new Intent(context, Timer.class);
+
+        context.startService(Timer);
+
         if (mFloatingViewManager != null) {
             mFloatingViewManager.removeAllViewToWindow();
             mFloatingViewManager = null;
         }
+
     }
 
     /**
@@ -174,11 +234,11 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
         builder.setPriority(NotificationCompat.PRIORITY_MIN);
         builder.setCategory(NotificationCompat.CATEGORY_SERVICE);
 
-//        // PendingIntent作成
+        // PendingIntent作成
 //        final Intent notifyIntent = new Intent(this, DeleteActionActivity.class);
 //        PendingIntent notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        builder.setContentIntent(notifyPendingIntent);
-
+//
         return builder.build();
     }
 
@@ -259,17 +319,18 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
     }
 
 
-
-
-    int checkTime(){
+    int checkTime() {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String s = sharedPreferences.getString("example_list","20");
+        String s = sharedPreferences.getString("example_list", "20");
         //getString("example_list","20");
 
-        Integer i= Integer.parseInt(s);
-        return  i;
+        Integer i = Integer.parseInt(s);
+        return i;
 
 
     }
+
+
+
 }

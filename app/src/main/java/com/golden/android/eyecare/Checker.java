@@ -1,5 +1,6 @@
 package com.golden.android.eyecare;
 
+import android.app.Activity;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -48,7 +49,7 @@ public class Checker extends IntentService {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Boolean Toggle = sharedPreferences.getBoolean("example_switch", true);
         Boolean screenon=isScreenOn(getApplicationContext());
-        screenon =true;
+
         if (Toggle&&screenon) {
 
             if (!global.getFlag()) { // to display flag must  be false
@@ -76,7 +77,12 @@ public class Checker extends IntentService {
             } else {
                 i(TAG, "displayAlert: display true so kill activity");
                 //   Toast.makeText(Checker.this, "Awesome you have 20 point added to score ", Toast.LENGTH_SHORT).show();
-                sendBroadcast(new Intent("killerAlert"));
+                //sendBroadcast(new Intent("killerAlert"));
+//                final Activity activity = getApplicationContext().getActivity();
+//                activity.stopService(new Intent(activity, CustomFloatingViewService.class));
+
+                getApplicationContext().stopService(new Intent(getApplicationContext(),CustomFloatingViewService.class));
+
                 global.setFlag(false);
                 flag = false;
 

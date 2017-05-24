@@ -124,9 +124,9 @@ public class MainActivity extends AppCompatActivity {
             final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getApplicationContext().getPackageName()));
             startActivityForResult(intent, CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE);
         }
-        Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
-        //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startService(dialogIntent);
+//        Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+//        //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startService(dialogIntent);
 
 
        // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
