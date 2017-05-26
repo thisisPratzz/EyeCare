@@ -68,8 +68,10 @@ public class Checker extends IntentService {
 //
 //                startActivity(dialogIntent);
 
-            Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+            Intent dialogIntent = new Intent(getApplicationContext(), ForegroundService.class);
             //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+             //   dialogIntent.putExtra("fromchecker",true);
+                dialogIntent.setAction(Constants.ACTION.STARTFOREGROUND_ACTION);
             startService(dialogIntent);
 
 

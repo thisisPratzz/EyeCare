@@ -1,3 +1,23 @@
+/*
+ * Copyright (c) 2016. Truiton (http://www.truiton.com/).
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * Contributors:
+ * Mohit Gupt (https://github.com/mohitgupt)
+ *
+ */
+
 package com.golden.android.eyecare;
 
 import android.app.Notification;
@@ -8,24 +28,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.hardware.display.DisplayManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
-import android.support.annotation.Nullable;
-//import android.support.v4.app.NotificationCompat;
-
-import android.support.v7.app.NotificationCompat;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
-import android.app.Notification;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,25 +46,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import jp.co.recruit_lifestyle.android.floatingview.FloatingViewListener;
 import jp.co.recruit_lifestyle.android.floatingview.FloatingViewManager;
 
-/**
- * FloatingViewのカスタマイズを行います。
- * サンプルとしてクリック時にはメールアプリを起動します。
- */
-public class CustomFloatingViewService extends Service implements FloatingViewListener {
-
+public class ForegroundService extends Service implements FloatingViewListener {
+    private static final String LOG_TAG = "ForegroundService";
 
     Context context;
     String TAG = "FloatingView";
     Global global;
-
-
-    /**
-     * 通知ID
-     */
     private static final int NOTIFICATION_ID = 908114;
 
     /**
@@ -104,26 +105,24 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
 
 
 
+
+
     }
-
-    /**
-     * {@inheritDoc}
-     */
-
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // 既にManagerが存在していたら何もしない
+        //
+        //Do nothing If you already exist Manager
         if (mFloatingViewManager != null) {
-            return START_STICKY;
+            return START_REDELIVER_INTENT;
         }
         final DisplayMetrics metrics = new DisplayMetrics();
         final WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
         final LayoutInflater inflater = LayoutInflater.from(this);
-        Vibrator v = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
-        // Vibrate for 500 milliseconds
-        v.vibrate(1000);
+//        Vibrator v = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+//        // Vibrate for 500 milliseconds
+//        v.vibrate(1000);
 //        if(intent.getExtras()==null)
 //        {
 //
@@ -157,16 +156,16 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
             }
         });
 
-        String ToastString = getString(R.string.Toasttext1) + " " + checkTime() + " " + getString(R.string.Toasttext2);
-        Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_SHORT);
-//      Set the Gravity to Top and Left
-        toast.setGravity(Gravity.TOP | Gravity.LEFT, 100, 200);
-        toast.setDuration(Toast.LENGTH_LONG);
-
-        ViewGroup group = (ViewGroup) toast.getView();
-        TextView messageTextView = (TextView) group.getChildAt(0);
-        messageTextView.setTextSize(20);
-        toast.show();
+//        String ToastString = getString(R.string.Toasttext1) + " " + checkTime() + " " + getString(R.string.Toasttext2);
+//        Toast toast = Toast.makeText(getApplicationContext(), ToastString, Toast.LENGTH_SHORT);
+////      Set the Gravity to Top and Left
+//        toast.setGravity(Gravity.TOP | Gravity.LEFT, 100, 200);
+//        toast.setDuration(Toast.LENGTH_LONG);
+//
+//        ViewGroup group = (ViewGroup) toast.getView();
+//        TextView messageTextView = (TextView) group.getChildAt(0);
+//        messageTextView.setTextSize(20);
+//        toast.show();
 
 
         mFloatingViewManager = new FloatingViewManager(this, this);
@@ -178,37 +177,28 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
         final FloatingViewManager.Options options = loadOptions(metrics);
         mFloatingViewManager.addViewToWindow(iconView, options);
         mFloatingViewManager.setDisplayMode(FloatingViewManager.DISPLAY_MODE_SHOW_ALWAYS);
-        // 常駐起動
-        //startForeground(NOTIFICATION_ID, createNotification(intent));
-        notify(intent);
-      //  return START_REDELIVER_INTENT;
-        return START_STICKY;
 
+        notify(intent);
+
+        return START_REDELIVER_INTENT;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onDestroy() {
         destroy();
 
-
         super.onDestroy();
+
+        Log.i(LOG_TAG, "In onDestroy");
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Nullable
     @Override
     public IBinder onBind(Intent intent) {
+        // Used only in case of bound services.
         return null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public void onFinishFloatingView() {
 
@@ -216,9 +206,6 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
         stopSelf();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onTouchFinished(boolean isFinishing, int x, int y) {
         if (!isFinishing) {
@@ -245,44 +232,6 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
             mFloatingViewManager = null;
         }
 
-    }
-
-    /**
-     * It displays the notification.
-     */
-    private void createNotification(Intent intent) {
-
-
-
-//        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-//        if (intent.getAction()=="from checker")
-//        {
-//        builder.setWhen(System.currentTimeMillis());
-//        builder.setSmallIcon(R.mipmap.ic_launcher);
-//        builder.setContentTitle(getString(R.string.app_name));
-//        builder.setContentText(getString(R.string.notification_content_text));
-//        builder.setOngoing(true);
-//        builder.setPriority(NotificationCompat.PRIORITY_MIN);
-//        builder.setDefaults(Notification.DEFAULT_SOUND);
-//       // builder.setCategory(NotificationCompat.CATEGORY_SERVICE);
-//        // PendingIntent作成
-////        final Intent notifyIntent = new Intent(this, DeleteActionActivity.class);
-////        PendingIntent notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-////        builder.setContentIntent(notifyPendingIntent);
-////
-//        //noticlick
-//        Intent myIntent = new Intent(context, CustomFloatingViewService.class);
-//        myIntent.putExtra("noticlick",true);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(
-//                CustomFloatingViewService.this,
-//                0,
-//                myIntent,Intent.FILL_IN_ACTION);
-//
-//
-//
-//        builder.setContentIntent(pendingIntent);
-//        }
-//        return builder.build();
     }
 
     /**
@@ -355,9 +304,7 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
         }
 
         // Initial Animation
-        final boolean animationSettings = sharedPref.getBoolean("settings_animation", options.animateInitialMove);
-        options.animateInitialMove = animationSettings;
-
+        options.animateInitialMove = Boolean.TRUE;
         return options;
     }
 
@@ -375,67 +322,75 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
     }
 
 
-void launchCount()
-{
-
-    Intent dialogIntent = new Intent(getApplicationContext(), Count.class);
-    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-    dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
-    startActivity(dialogIntent);
-    stopForeground(true );
-    stopSelf();
-
-}
-
-
-void notify(Intent intent)
-{
-    Boolean b=intent.getExtras().getBoolean("fromchecker");
-    Boolean r=intent.getExtras().getBoolean("remove");
-    if(intent.getExtras().getBoolean("fromchecker"))
+    void launchCount()
     {
-        Intent myIntent = new Intent(this, CustomFloatingViewService.class);
-        myIntent.putExtra("remove",true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0,myIntent,0);
 
-//        Intent newIntent = new Intent(context,Count.class);
-//        pendingIntent = PendingIntent.getService(this, 0,newIntent,0);
+        Intent dialogIntent = new Intent(getApplicationContext(), Count.class);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+        startActivity(dialogIntent);
+        stopForeground(true );
+        stopSelf();
 
+    }
+    void notify(Intent intent)
+    {
 
+        if (intent.getAction().equals(Constants.ACTION.STARTFOREGROUND_ACTION)) {
+            Log.i(LOG_TAG, "Received Start Foreground Intent ");
 
 //
-//        Intent playIntent = new Intent(this, CustomFloatingViewService.class);
-//        playIntent.setAction("remove");
-//        PendingIntent pplayIntent = PendingIntent.getService(this, 0, playIntent, 0);
+//            Intent notificationIntent = new Intent(this, MainActivity.class);
+//            notificationIntent.setAction(Constants.ACTION.MAIN_ACTION);
+//            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+//                    | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+//                    notificationIntent, 0);
 
+            Intent notificationIntent = new Intent(this, ForegroundService.class);
+            notificationIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
+            PendingIntent pendingIntent = PendingIntent.getService(this, 0,
+                    notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 
-        Notification notification =  new NotificationCompat.Builder(this)
-                .setOngoing(true)
-        .setWhen(System.currentTimeMillis())
-        .setSmallIcon(R.mipmap.ic_launcher)
-        .setContentTitle(getString(R.string.app_name))
-        .setContentText(getString(R.string.notification_content_text))
-        .setOngoing(true)
-        .setPriority(NotificationCompat.PRIORITY_MIN)
-        .setDefaults(Notification.DEFAULT_SOUND)
-        .setCategory(NotificationCompat.CATEGORY_SERVICE)
-        .setContentIntent(pendingIntent)
-//                .addAction(android.R.drawable.ic_media_previous,
-//                        "Previous", pplayIntent)
-                .build();
+            Intent previousIntent = new Intent(this, ForegroundService.class);
+            previousIntent.setAction(Constants.ACTION.PREV_ACTION);
+            PendingIntent ppreviousIntent = PendingIntent.getService(this, 0,
+                    previousIntent, 0);
 
+            Intent playIntent = new Intent(this, ForegroundService.class);
+            playIntent.setAction(Constants.ACTION.STOPFOREGROUND_ACTION);
+            PendingIntent pplayIntent = PendingIntent.getService(this, 0,
+                    playIntent, 0);
 
-        startForeground(NOTIFICATION_ID, notification);
+            Intent nextIntent = new Intent(this, ForegroundService.class);
+            nextIntent.setAction(Constants.ACTION.NEXT_ACTION);
+            PendingIntent pnextIntent = PendingIntent.getService(this, 0,
+                    nextIntent, 0);
 
+            Bitmap icon = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.ic_eye);
+            Intent dialogIntent = new Intent(getApplicationContext(), Count.class);
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+          //  startActivity(dialogIntent);
+            PendingIntent pplayIntent1 = PendingIntent.getService(this, 0,
+                    dialogIntent, 0);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setContentTitle("Truiton Music Player");
+            builder.setTicker("Truiton Music Player");
+            builder.setContentText("My Music");
+            builder.setSmallIcon(R.drawable.ic_eye);
+            builder.setContentIntent(pendingIntent);
+            builder.setOngoing(false);
+            Notification notification = builder.build();
+            startForeground(Constants.NOTIFICATION_ID.FOREGROUND_SERVICE,
+                    notification);
+        } else if (intent.getAction().equals(
+                Constants.ACTION.STOPFOREGROUND_ACTION)) {
+            Log.i(LOG_TAG, "Received Stop Foreground Intent");
+                launchCount();
+        }
     }
-    else// if (intent.getExtras().getBoolean("remove"))
-    {
-        launchCount();
-    }
-
-
-}
-
-
 
 }

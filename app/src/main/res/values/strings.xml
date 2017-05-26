@@ -65,14 +65,15 @@
     <string name="great_job">Great Job </string>
     <string name="continueButton">Continue</string>
     <string name="turn_on">Turn On</string>
-    <string name="slide1">Now a days we use smart phones continuously for prolonged period</string>
+    <string name="slide1">These days we use smartphones for a prolonged period</string>
     <string name="ExcessiveUse">Excessive use of Smart phones</string>
-    <string name="solutionforyou">No worries EyeCare has solution for you without any major change</string>
+    <string name="solutionforyou">Don\'t worry! EyeCare has a solution for you!</string>
     <string name="leads_to_eye_strain_and_neck_pain">Leads to Eye Strain and Neck pain</string>
     <string name="after_every_20_minutes_of_screen_use">After Every 20 minutes of Screen use</string>
-    <string name="eyecare_will_display_to_alert_if_you_have_use_this_device_for_more_20_minutes">EyeCare will Display to alert if you have use this device for more 20 minutes</string>
-    <string name="to_take_a_break_from_smartphone_click_on_yes">To take a Break From smartphone click on yes</string>
-    <string name="look_at_far_object_which_20_feets_away">Look at far object which 20 feets Away</string>
+    <string name="eyecare_will_display_to_alert_if_you_have_use_this_device_for_more_20_minutes">EyeCare will display an alert if you use this device for more than 20 minutes</string>
+    <string name="to_take_a_break_from_smartphone_click_on_yes">To take a Break From smartphone click on eye Icon</string>
+    <string name="look_at_far_object_which_20_feets_away">Look at an object that is at least 20 feet away</string>
+    <string name="count_down">EyeCare will display a 20 second countdown</string>
 
 
 
@@ -81,7 +82,8 @@
     <string name="notification_content_text">is running in background</string>
     <string name="Toasttext1">You have used device for</string>
     <string name="Toasttext2">minutes now , time for break click on eye Icon</string>
-
+    <string name="score">Score</string>
+    <string name="share_your_score">Share your Score</string>
 
 
 </resources>

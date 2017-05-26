@@ -1,13 +1,16 @@
 package com.golden.android.eyecare;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
@@ -17,6 +20,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +28,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.golden.android.eyecare.miuiwork.MIUIUtils;
 import com.mikepenz.aboutlibraries.Libs;
 import com.mikepenz.aboutlibraries.LibsBuilder;
 import com.mikepenz.aboutlibraries.entity.Library;
@@ -78,6 +83,32 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        final Button shareButton = (Button) findViewById(R.id.share);
+        shareButton.setOnClickListener(new Button.OnClickListener()
+        {
+            public void onClick(View v)
+            {
+
+                String name = sharedPreferences.getString("example_text", null);
+                SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                shared = getSharedPreferences("score", Context.MODE_PRIVATE);
+                Integer myScore = shared.getInt("MyScore",0);
+
+
+
+                Uri imageUri = Uri.parse("android.resource://" + getPackageName()
+                        + "/drawable/" + "ic_eye");
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, "Hello!! checkout my EyeCare score\n"+name+"'s Score :"+myScore+"\n To Protect your Eyes from pain use  ");
+              //  shareIntent.putExtra(Intent.EXTRA_STREAM, imageUri);
+                shareIntent.setType("text/plain");
+//                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                startActivity(Intent.createChooser(shareIntent, "send"));
+
+            }
+        });
+
 
 
         final Button turnOnButton = (Button) findViewById(R.id.turnon);
@@ -113,20 +144,26 @@ public class MainActivity extends AppCompatActivity {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //
 //        startActivity(intent);
-
+        String manufacturer = "xiaomi";
+//        if(manufacturer.equalsIgnoreCase(android.os.Build.MANUFACTURER)) {
+//            //this will open auto start screen where user can enable permission for your app
+//            Intent intent = new Intent();
+//            intent.setComponent(new ComponentName("com.miui.securitycenter", "com.miui.permcenter.permissions.AppPermissionsEditorActivity"));
+//            startActivity(intent);
+//
+//            Intent myAppSettings = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName()));
+//            startActivity(myAppSettings);
+//
+//        }
         FirstStart();
         setContentView(R.layout.activity_main);
         getSupportActionBar().setElevation(0);
 
 
-        boolean permissionCheck = Settings.canDrawOverlays(getApplicationContext());
-        if(!permissionCheck) {
-            final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getApplicationContext().getPackageName()));
-            startActivityForResult(intent, CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE);
-        }
-//        Intent dialogIntent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
-//        //dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        startService(dialogIntent);
+
+//        Intent dialogIntent = new Intent(getApplicationContext(), Reward.class);
+//        dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        startActivity(dialogIntent);
 
 
        // registerReceiver(screenReceiver, new IntentFilter("android.intent.action.USER_PRESENT"));
@@ -327,6 +364,30 @@ public class MainActivity extends AppCompatActivity {
 
                     //  Apply changes
                    // e.apply();
+                }else {
+
+                        Context context=getApplicationContext();
+//                    if (Build.VERSION.SDK_INT >= 19 && MIUIUtils.isMIUI() && !MIUIUtils.isFloatWindowOptionAllowed(context)) {
+//                        Log.i(TAG, "MIUI DEVICE: Screen Overlay Not allowed");
+//                        startActivityForResult(MIUIUtils.toFloatWindowPermission(context, context.getPackageName()), 101);
+//                    } else if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(context)) {
+//                        Log.i(TAG, "SDK_INT > 23: Screen Overlay Not allowed");
+//                        startActivityForResult(new Intent(
+//                                        "android.settings.action.MANAGE_OVERLAY_PERMISSION",
+//                                        Uri.parse("package:" + context.getPackageName()))
+//                                , 101
+//                        );
+//                    } else {
+                        boolean permissionCheck = false;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            permissionCheck = Settings.canDrawOverlays(getApplicationContext());
+
+                            if (!permissionCheck) {
+                                final Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getApplicationContext().getPackageName()));
+                                startActivityForResult(intent, CUSTOM_OVERLAY_PERMISSION_REQUEST_CODE);
+                            }
+                        }
+                 //   }
                 }
             }
         });

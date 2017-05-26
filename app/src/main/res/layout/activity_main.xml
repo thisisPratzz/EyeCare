@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_centerVertical="true"
     android:layout_width="match_parent"
@@ -33,7 +34,11 @@
         android:layout_gravity="center_horizontal"
         android:textIsSelectable="false"
         android:textSize="50sp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:gravity="center"
+
+
+        />
 
 
 
@@ -45,20 +50,47 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/textView"
         android:text="@string/scoreValue"
-        android:textSize="60dp"
+        android:textSize="80dp"
         android:singleLine="false"
         android:autoText="false"
-        android:layout_gravity="bottom|center_horizontal"
-        android:textAlignment="center" />
+        android:textColor="@color/about_libraries_card"
 
+        android:layout_gravity="bottom|center_horizontal"
+        android:textAlignment="center"
+        android:gravity="center"
+        />
+
+    <Button
+        android:id="@+id/share"
+
+
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="25sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="5sp"
+
+        android:layout_weight="1"
+        android:background="@android:drawable/dialog_holo_light_frame"
+
+        android:drawableLeft="@android:drawable/ic_menu_share"
+        android:elevation="24dp"
+        android:paddingLeft="10sp"
+        android:text="@string/share_your_score" />
 
     <Button
         android:text="@string/turn_on"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/turnon"
+        android:background="@android:drawable/dialog_holo_light_frame"
+
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:visibility="gone"
         android:elevation="24dp" />
+
+
+
 
 </LinearLayout>
