@@ -3,6 +3,7 @@ package com.golden.android.eyecare;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.os.Vibrator;
@@ -28,6 +29,11 @@ public class Reward extends AppCompatActivity {
         nameview.setText(nameview.getText()+" "+ name);
         // TODO increasing score
     increaseScore();
+
+        MediaPlayer ring= MediaPlayer.create(getApplicationContext(),R.raw.notifyring);
+        ring.start();
+
+
         Vibrator v = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
         v.vibrate(1000);

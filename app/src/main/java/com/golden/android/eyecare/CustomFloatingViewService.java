@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.hardware.display.DisplayManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -390,18 +391,20 @@ void launchCount()
 
 void notify(Intent intent)
 {
-    Boolean b=intent.getExtras().getBoolean("fromchecker");
-    Boolean r=intent.getExtras().getBoolean("remove");
-    if(intent.getExtras().getBoolean("fromchecker"))
-    {
-        Intent myIntent = new Intent(this, CustomFloatingViewService.class);
-        myIntent.putExtra("remove",true);
-        PendingIntent pendingIntent = PendingIntent.getService(this, 0,myIntent,0);
-
+//    Boolean b=intent.getExtras().getBoolean("fromchecker");
+//    Boolean r=intent.getExtras().getBoolean("remove");
+    //if(intent.getExtras().getBoolean("fromchecker"))
+   // {
+//        Intent myIntent = new Intent(this, Count.class);
+//        myIntent.putExtra("remove",true);
+//        PendingIntent pendingIntent = PendingIntent.getService(this, 0,myIntent,0);
+        final Intent notifyIntent = new Intent(this, Count.class);
+        PendingIntent notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        Intent newIntent = new Intent(context,Count.class);
 //        pendingIntent = PendingIntent.getService(this, 0,newIntent,0);
 
-
+    MediaPlayer ring= MediaPlayer.create(getApplicationContext(),R.raw.notifyring);
+    ring.start();
 
 //
 //        Intent playIntent = new Intent(this, CustomFloatingViewService.class);
@@ -419,19 +422,21 @@ void notify(Intent intent)
         .setPriority(NotificationCompat.PRIORITY_MIN)
         .setDefaults(Notification.DEFAULT_SOUND)
         .setCategory(NotificationCompat.CATEGORY_SERVICE)
-        .setContentIntent(pendingIntent)
-//                .addAction(android.R.drawable.ic_media_previous,
-//                        "Previous", pplayIntent)
+        .setContentIntent(notifyPendingIntent)
+                .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notifyring))
+                //                .addAction(android.R.drawable.ic_media_previous,
+//
+//                  "Previous", pplayIntent)
                 .build();
 
 
         startForeground(NOTIFICATION_ID, notification);
 
-    }
-    else// if (intent.getExtras().getBoolean("remove"))
-    {
-        launchCount();
-    }
+ //   }
+//    else// if (intent.getExtras().getBoolean("remove"))
+//    {
+//        launchCount();
+//    }
 
 
 }

@@ -53,7 +53,7 @@ public class Count extends AppCompatActivity {
             return false;
         }
     };
-    String TAG = "Count Class";
+    String TAG ="Checker";
     private View mContentView;
     private final Runnable mHidePart2Runnable = new Runnable() {
         @SuppressLint("InlinedApi")
@@ -95,6 +95,13 @@ public class Count extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
+        Intent intent = new Intent(getApplicationContext(), CustomFloatingViewService.class);
+        intent.addCategory(TAG);
+        stopService(intent);
+
+
 
         setContentView(R.layout.activity_count);
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
