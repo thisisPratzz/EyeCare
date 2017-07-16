@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".Global"
@@ -42,15 +42,15 @@
                 <action android:name="killAlert" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".CustomFloatingViewService"
             android:exported="false" />
         <service
             android:name=".Checker"
             android:exported="false" />
-        <service android:name=".ForegroundService">
+        <service android:name=".ForegroundService" />
 
-        </service>
         <service
             android:name=".Timer"
             android:exported="false" />
@@ -77,7 +77,12 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".Reward"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+
+        <service
+            android:name=".RemoveNotification"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

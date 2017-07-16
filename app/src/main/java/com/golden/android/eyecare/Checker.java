@@ -57,7 +57,6 @@ public class Checker extends IntentService {
 
 
                 //   Toast.makeText(Checker.this, "you will  20 point added to score ", Toast.LENGTH_SHORT).show();
-
                 flag = true;
                 global.setFlag(true);
                 i(TAG, "onHandleIntent: flag value" + flag);

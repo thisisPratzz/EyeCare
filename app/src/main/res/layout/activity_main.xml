@@ -16,14 +16,14 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/medal"
-
         android:layout_gravity="center_horizontal"
-        android:contentDescription="@string/medalView"
+
         android:layout_weight="4"
-        android:elevation="24dp"
         android:adjustViewBounds="true"
-        android:cropToPadding="false" />
+        android:contentDescription="@string/medalView"
+        android:cropToPadding="false"
+        android:elevation="24dp"
+        android:src="@drawable/medal" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -61,6 +61,29 @@
         />
 
     <Button
+
+        android:id="@+id/turnon"
+
+        android:text="@string/turn_on"
+
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginBottom="10sp"
+        android:layout_marginLeft="25sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="5sp"
+        android:elevation="24dp"
+        android:paddingLeft="10sp"
+        android:layout_weight="1"
+
+
+        android:background="@android:drawable/dialog_holo_light_frame"
+
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:visibility="gone"
+        />
+
+    <Button
         android:id="@+id/share"
 
 
@@ -70,25 +93,17 @@
         android:layout_marginLeft="25sp"
         android:layout_marginRight="20sp"
         android:layout_marginTop="5sp"
-
+        android:elevation="24dp"
+        android:paddingLeft="10sp"
         android:layout_weight="1"
+
         android:background="@android:drawable/dialog_holo_light_frame"
 
         android:drawableLeft="@android:drawable/ic_menu_share"
-        android:elevation="24dp"
-        android:paddingLeft="10sp"
+
         android:text="@string/share_your_score" />
 
-    <Button
-        android:text="@string/turn_on"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/turnon"
-        android:background="@android:drawable/dialog_holo_light_frame"
 
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:visibility="gone"
-        android:elevation="24dp" />
 
 
 

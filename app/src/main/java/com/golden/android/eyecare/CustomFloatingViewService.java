@@ -8,25 +8,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.hardware.display.DisplayManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
 import android.os.IBinder;
-import android.os.PowerManager;
 import android.os.Vibrator;
 import android.preference.PreferenceManager;
-import android.provider.CalendarContract;
 import android.support.annotation.Nullable;
 //import android.support.v4.app.NotificationCompat;
 
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
-import android.app.Notification;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,7 +84,8 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
             public void onReceive(Context context, Intent intent) {
                 if(intent.getAction().equals(Intent.ACTION_SCREEN_OFF)) {
                     Log.v("screenoffReceiver", "SCREEN OFF");
-                    onDestroy();
+                    onFinishFloatingView();
+                    //onDestroy();
                     stopForeground(Boolean.TRUE);
                 }
                 return;
@@ -124,7 +118,7 @@ public class CustomFloatingViewService extends Service implements FloatingViewLi
         final LayoutInflater inflater = LayoutInflater.from(this);
         Vibrator v = (Vibrator) this.getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
         // Vibrate for 500 milliseconds
-        v.vibrate(1000);
+        v.vibrate(500);
 //        if(intent.getExtras()==null)
 //        {
 //
@@ -392,7 +386,7 @@ void launchCount()
 void notify(Intent intent)
 {
 //    Boolean b=intent.getExtras().getBoolean("fromchecker");
-//    Boolean r=intent.getExtras().getBoolean("remove");
+        String a =intent.getAction();
     //if(intent.getExtras().getBoolean("fromchecker"))
    // {
 //        Intent myIntent = new Intent(this, Count.class);
@@ -402,6 +396,10 @@ void notify(Intent intent)
         PendingIntent notifyPendingIntent = PendingIntent.getActivity(this, 0, notifyIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 //        Intent newIntent = new Intent(context,Count.class);
 //        pendingIntent = PendingIntent.getService(this, 0,newIntent,0);
+
+    final Intent remove = new Intent(this, RemoveNotification.class);
+    PendingIntent removePendingIntent = PendingIntent.getService(this, 0, remove, PendingIntent.FLAG_UPDATE_CURRENT);
+
 
     MediaPlayer ring= MediaPlayer.create(getApplicationContext(),R.raw.notifyring);
     ring.start();
@@ -414,6 +412,9 @@ void notify(Intent intent)
 
         Notification notification =  new NotificationCompat.Builder(this)
                 .setOngoing(true)
+                .setStyle(new NotificationCompat.MediaStyle()
+                        .setShowActionsInCompactView(
+                                new int[]{0}))  // show only play/pause in compact view)
         .setWhen(System.currentTimeMillis())
         .setSmallIcon(R.mipmap.ic_launcher)
         .setContentTitle(getString(R.string.app_name))
@@ -422,8 +423,10 @@ void notify(Intent intent)
         .setPriority(NotificationCompat.PRIORITY_MIN)
         .setDefaults(Notification.DEFAULT_SOUND)
         .setCategory(NotificationCompat.CATEGORY_SERVICE)
+
         .setContentIntent(notifyPendingIntent)
                 .setSound(Uri.parse("android.resource://" + getPackageName() + "/" + R.raw.notifyring))
+                .addAction(android.R.drawable.ic_delete,"Remove notification",removePendingIntent)
                 //                .addAction(android.R.drawable.ic_media_previous,
 //
 //                  "Previous", pplayIntent)

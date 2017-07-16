@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.TimerTask;
+
 public class Reward extends AppCompatActivity {
 
     @Override
@@ -83,14 +85,44 @@ public class Reward extends AppCompatActivity {
     void increaseScore() {
         SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         shared = getSharedPreferences("score", Context.MODE_PRIVATE);
-        Integer myScore = shared.getInt("MyScore",0);
-        TextView Sc = (TextView) findViewById(R.id.ScoreValue);
+        final Integer myScore = shared.getInt("MyScore",0);
+        final TextView Sc = (TextView) findViewById(R.id.ScoreValue);
         //Integer i =Integer.parseInt(myScore);
-        myScore+=20;
+        final int score = myScore;
+        final int finalScore = myScore+20;
 
-       // myScore=i.toString();
+
+
+
+       // myScore+=20;
+
+        Thread t = new Thread() {
+            int score = (int)myScore-1;
+            final int finalScore = score+20;
+
+            @Override
+            public void run() {
+                try {
+                    while (score<finalScore) {
+                        Thread.sleep(100);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                score++;
+                                Sc.setText(""+score);
+                                // update TextView here!
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
+        // myScore=i.toString();
         Sc.setText(""+myScore);
-        shared.edit().putInt("MyScore",myScore).commit();
+        shared.edit().putInt("MyScore",myScore+20).commit();
 //        new CountDownTimer(i, 1000) {
 //            TextView mTextField=(TextView)findViewById(R.id.fullscreen_content);
 //            public void onTick(long millisUntilFinished) {
@@ -104,5 +136,11 @@ public class Reward extends AppCompatActivity {
 //            }
 //        }.start();
     }
+
+
+
+
+
+
 }
 

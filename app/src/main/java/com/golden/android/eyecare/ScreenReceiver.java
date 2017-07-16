@@ -23,8 +23,8 @@ public class ScreenReceiver extends BroadcastReceiver {
             Log.i(TAG, "onReceive: service called ");
 
             Intent i = new Intent(context, Timer.class);
-            //i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-           // i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             //   context.startActivity(i);
             context.startService(i);
         }

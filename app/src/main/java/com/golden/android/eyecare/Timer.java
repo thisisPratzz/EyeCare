@@ -72,7 +72,7 @@ public class Timer extends IntentService {
         // requested from the system.
         AlarmManager alarmManager = (AlarmManager)
                 getApplicationContext().getSystemService(getApplicationContext().ALARM_SERVICE);
-//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + FIFTEEN_SEC_MILLIS,
+//        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, System.c   urrentTimeMillis() + FIFTEEN_SEC_MILLIS,
 //                FIFTEEN_SEC_MILLIS, pIntent);
 
 
