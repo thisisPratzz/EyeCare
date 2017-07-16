@@ -41,24 +41,23 @@
         />
 
 
-
-
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/textView"
-        android:text="@string/scoreValue"
-        android:textSize="80dp"
-        android:singleLine="false"
-        android:autoText="false"
-        android:textColor="@color/about_libraries_card"
-
         android:layout_gravity="bottom|center_horizontal"
-        android:textAlignment="center"
+        android:layout_weight="1"
+        android:autoText="false"
+        android:elevation="23dp"
         android:gravity="center"
-        />
+        android:shadowColor="@android:color/black"
+
+        android:singleLine="false"
+        android:text="@string/scoreValue"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/about_libraries_card"
+        android:textSize="80dp" />
 
     <Button
 

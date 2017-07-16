@@ -29,7 +29,6 @@ public class Reward extends AppCompatActivity {
         TextView nameview = (TextView) findViewById(R.id.RewardTextView);
       //  name = nameview.getText()+" "+ name;
         nameview.setText(nameview.getText()+" "+ name);
-        // TODO increasing score
     increaseScore();
 
         MediaPlayer ring= MediaPlayer.create(getApplicationContext(),R.raw.notifyring);

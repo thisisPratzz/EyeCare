@@ -19,7 +19,6 @@ import android.widget.Toast;
  * status bar and navigation/system bar) with user interaction.
  */
 
-// TODO add sound
 
 
 public class Count extends AppCompatActivity {

@@ -43,6 +43,12 @@ public class EnterName extends Fragment implements ISlidePolicy, ISlideBackgroun
     private static final int REQUEST_OVERLAY_PERMISSION = 101;
 
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+
+    }
 
     @Override
     public void onDestroyView() {

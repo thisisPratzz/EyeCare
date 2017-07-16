@@ -27,7 +27,6 @@ public class Checker extends IntentService {
      * @param //name Used to name the worker thread, important only for debugging.
      */
 
-    // TODO check whether alert is running
     String TAG ="Checker";
     public Checker() {
         super("Checker");

@@ -60,6 +60,14 @@ public class MainActivity extends AppCompatActivity {
         super.onPostResume();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+       if(requestCode==1) {
+
+           Toast.makeText(this, "Joining score +20 ", Toast.LENGTH_SHORT).show();
+       }
+    }
 
     @Override
     protected void onResume() {
@@ -251,7 +259,7 @@ public class MainActivity extends AppCompatActivity {
        // String myScore = shared.getString("MyScore", null);
        // TextView Sc = (TextView) findViewById(R.id.textView3);
         //Integer i = Integer.parseInt(myScore);
-       Integer i=20;
+       Integer i=0;
       //example change
         shared.edit().putInt("MyScore",i).apply();
 
@@ -337,11 +345,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-                    Intent intent = new Intent(getApplicationContext(),IntroActivity.class);
+                    Intent intent = new Intent(MainActivity.this,IntroActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     //intent.addFlags(I)
-
-                    startActivity(intent);
+                    startActivityForResult(intent,1);
+                   // startActivity(intent);
 
                     Intent Timer = new Intent(getApplicationContext(), Timer.class);
 

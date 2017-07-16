@@ -1,5 +1,6 @@
 package com.golden.android.eyecare;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,6 +71,9 @@ public class IntroActivity extends AppIntro2{
     @Override
     public void onDonePressed(Fragment currentFragment) {
         super.onDonePressed(currentFragment);
+//        Intent returnIntent = new Intent();
+//        setResult(123, returnIntent);
+
         finish();
     }
 
